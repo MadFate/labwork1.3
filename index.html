@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #shift {
+      width: 20px;
+    }
+
+    div {
+      margin-bottom: 20px; 
+    }
+  </style>
+</head>
+
+<body> 
+  Message: <input type="text" id="message"> 
+</br>  
+  Shift: <input type="text" id="shift">
+  </br>
+  <input type="button" id="encoder" value="Сдвинуть">
+
+  <script>
+    var alfabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var encoder = document.getElementById("encoder");
+    var message = document.getElementById("message");
+
+    encoder.onclick = function() {
+      var shift = +document.getElementById("shift").value;
+      var returnMessage = "";
+
+      returnMessage = moveMessage(message.value, shift);
+
+      message.value = returnMessage;
+    }
+
+    function moveMessage(message, shift) {
+      var returnMessage = "";
+      
+      for (var i = 0; i < message.length; i++) {
+        var position = alfabet.indexOf(message[i].toUpperCase());
+        var newPosition = ((position + shift) >= alfabet.length) ? (position + shift) - alfabet.length :
+          ((position + shift) < 0) ? alfabet.length + (position + shift) : 
+          position + shift;
+
+        if (position < 0) {
+          returnMessage += message[i];
+          continue;
+        }
+
+        if (alfabet[position] == message[i]) {
+          returnMessage += alfabet[newPosition];
+        } else {
+          returnMessage += alfabet[newPosition].toLowerCase();
+        }
+      }
+
+      return returnMessage;
+    }
+  </script>
+</body>
+
+</html>
